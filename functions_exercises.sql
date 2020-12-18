@@ -31,5 +31,5 @@ select max(salary) from salaries;
 
 -- Use your knowledge of built in SQL functions to generate a username for all of the current and previous employees. A username should be all lowercase, and consist of the first character of the employees first name, the first 4 characters of the employees last name, an underscore, the month the employee was born, and the last two digits of the year that they were born.
 
-select LOWER(concat(SUBSTR(first_name,1,1), SUBSTR(last_name,1,4), "_", SUBSTR(birth_date, 6, 2), SUBSTR(birth_date, 3, 2))) as user_name
+select LOWER(concat(SUBSTR(first_name,1,1), SUBSTR(last_name,1,4), "_", SUBSTR(birth_date, 6, 2), SUBSTR(birth_date, 3, 2))) as user_name, first_name, last_name, birth_date
 from employees;
