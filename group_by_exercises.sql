@@ -22,29 +22,31 @@ group by last_name;
 
 -- Add a COUNT() to your results (the query above) and use ORDER BY to make it easier to find employees whose unusual name is shared with others.
 
-select count(last_name) from employees
+select last_name, count(last_name)
+ from employees
 where last_name like '%q%' and not last_name like '%qu%'
-order by last_name;
+group by last_name;
 
 -- Find all all employees with first names 'Irena', 'Vidya', or 'Maya'. Use COUNT(*) and GROUP BY to find the number of employees for each gender with those names.
 
-select count(*)
+select first_name, gender, count(first_name)
  from employees
  where first_name IN ('Irena', 'Vidya', 'Maya')
- group by gender;
+ group by first_name, gender;
 
   -- Using your query that generates a username for all of the employees, generate a count employees for each unique username. Are there any duplicate usernames? BONUS: How many duplicate usernames are there?
  
- select DISTINCT LOWER(
- 	concat(
- 	SUBSTR(first_name,1,1),
- 	 SUBSTR(last_name,1,4),
-   "_", 
- 	 SUBSTR(birth_date, 6, 2),
- 	 SUBSTR(birth_date, 3, 2))
- ) as user_name,
-  first_name, last_name, birth_date, COUNT(*)
+ select
+	lower(
+		concat(
+			substr(first_name, 1, 1),
+			substr(last_name, 1, 4),
+			"_",
+			substr(birth_date, 6, 2),
+			substr(birth_date, 3, 2)
+		)) as username,
+	count(*)
 from employees
-GROUP BY user_name, first_name, last_name, birth_date
-order by count(*) DESC;
--- There are 6 duplicate usernames 
+group by username
+having (count(username) > 1);
+-- There are 13251 duplicate usernames 
