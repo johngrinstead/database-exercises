@@ -67,3 +67,15 @@ and salaries.to_date > curdate()
 order by salaries.salary desc
 limit 1;
 
+-- Which current department manager has the highest salary?
+
+select dept_name as department_name, concat(first_name, " ", last_name) as department_manager, salary
+from employees
+join dept_manager on employees.emp_no = dept_manager.emp_no
+join departments on dept_manager.dept_no = departments.dept_no 
+join salaries on employees.emp_no = salaries.emp_no
+where dept_manager.to_date > curdate()
+and salaries.to_date > curdate()
+order by salary desc
+limit 1;
+
