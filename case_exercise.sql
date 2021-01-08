@@ -24,3 +24,19 @@ select count(emp_no) as number_of_employees, case
 	end as decade_of_birth
 from employees
 group by decade_of_birth;
+
+-- What is the current average salary for each of the following department groups: R&D, Sales & Marketing, Prod & QM, Finance & HR, Customer Service?
+
+SELECT
+        CASE 
+            WHEN dept_name IN ('research', 'development') THEN 'R&D'
+            WHEN dept_name IN ('sales', 'marketing') THEN 'Sales & Marketing' 
+            WHEN dept_name in ('Production', 'Quality Management') THEN 'Prod & QM'
+            WHEN dept_name in ('Finance', 'Human Resources') THEN 'Finance & HR'
+            ELSE dept_name
+            END AS dept_group,
+       avg(salary)
+FROM employees.employees_with_departments
+join salaries using (emp_no)
+where to_date > curdate()
+group by dept_group;
