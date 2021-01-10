@@ -30,3 +30,45 @@ create temporary table manager_vs_dept as (
 
 select *
 from manager_vs_dept;
+
+-- What languages are spoken in Santa Monica?
+
+select *
+from city
+join countrylanguage using (CountryCode)
+where Name = 'Santa Monica';
+
+-- How many different countries are in each region?
+
+select region, count(*)
+from country
+group by region;
+
+-- What is the population for each region?
+
+select region, sum(Population)
+from country
+group by region;
+
+-- What is the population for each continent?
+
+select continent, sum(Population)
+from country
+group by continent;
+
+-- What is the average life expectancy globally?
+
+select avg(lifeexpectancy)
+from country;
+
+-- What is the average life expectancy for each region, each continent? Sort the results from shortest to longest
+
+select region, avg(lifeexpectancy)
+from country
+group by region
+order by avg(lifeexpectancy);
+
+select continent, avg(lifeexpectancy)
+from country
+group by continent
+order by avg(lifeexpectancy);
